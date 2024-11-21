@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notícias e Investimentos Angola</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        header h1 {
+            color: #007bff;
+        }
+        .card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        iframe {
+            width: 100%;
+            height: 315px;
+        }
+        .loading-spinner {
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .empty-results {
+            text-align: center;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <header class="text-center mb-4">
+            <h1>Notícias e Investimentos Angola</h1>
+            <p>Acompanhe as últimas novidades sobre economia, investimentos, finanças e muito mais!</p>
+        </header>
+
+        <!-- Barra de Navegação -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Angola News</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#news-section">Notícias</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#influencers-section">Influenciadores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#market-section">Mercado Financeiro</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Seção de Notícias -->
+        <section id="news-section" class="mb-5">
+            <h2 class="text-center mb-4">Últimas Notícias de Economia</h2>
+            <div id="news-results" class="row"></div>
+        </section>
+
+        <!-- Seção de Influenciadores -->
+        <section id="influencers-section" class="mb-5">
+            <h2 class="text-center mb-4">Influenciadores e Especialistas</h2>
+            <div id="influencers-list" class="row"></div>
+        </section>
+
+        <!-- Seção de Mercado Financeiro -->
+        <section id="market-section" class="mb-5">
+            <h2 class="text-center mb-4">Mercado Financeiro</h2>
+            <div id="stock-market" class="row mb-4"></div>
+            <div id="crypto-market" class="row"></div>
+        </section>
+
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="loading-spinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS e Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        // Função para buscar notícias
+        async function fetchNews() {
+            const apiUrl = "https://newsapi.org/v2/everything?q=economia+Angola&apiKey=SUA_API_KEY"; // Substitua SUA_API_KEY com a sua chave da NewsAPI
+            const response = await axios.get(apiUrl);
+            const articles = response.data.articles || [];
+            const newsResultsDiv = document.getElementById("news-results");
+
+            newsResultsDiv.innerHTML = "";
+            articles.forEach(article => {
+                const newsElement = document.createElement("div");
+                newsElement.classList.add("col-md-4", "mb-4");
+                newsElement.innerHTML = `
+                    <div class="card h-100">
+                        <img src="${article.urlToImage || 'https://via.placeholder.com/150x150'}" class="card-img-top" alt="Imagem da notícia">
+                        <div class="card-body">
+                            <h5 class="card-title">${article.title}</h5>
+                            <p class="card-text">${article.description || "Sem descrição disponível."}</p>
+                            <a href="${article.url}" target="_blank" class="btn btn-primary">Ler Mais</a>
+                        </div>
+                    </div>
+                `;
+                newsResultsDiv.appendChild(newsElement);
+            });
+        }
+
+        // Função para buscar influenciadores
+        async function fetchInfluencers() {
+            const influencers = [
+                { name: "José dos Santos", area: "Economista", twitter: "https://twitter.com/josedsantos" },
+                { name: "Maria Ferreira", area: "Investidora", twitter: "https://twitter.com/mariaferreira" },
+                // Adicionar mais influenciadores...
+            ];
+
+            const influencersListDiv = document.getElementById("influencers-list");
+            influencersListDiv.innerHTML = "";
+            influencers.forEach(influencer => {
+                const influencerElement = document.createElement("div");
+                influencerElement.classList.add("col-md-4", "mb-4");
+                influencerElement.innerHTML = `
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${influencer.name}</h5>
+                            <p class="card-text">Área: ${influencer.area}</p>
+                            <a href="${influencer.twitter}" target="_blank" class="btn btn-primary">Seguir no Twitter</a>
+                        </div>
+                    </div>
+                `;
+                influencersListDiv.appendChild(influencerElement);
+            });
+        }
+
+        // Função para buscar dados do mercado financeiro
+        async function fetchMarketData() {
+            const stockApiUrl = "https://financialmodelingprep.com/api/v3/quote/AAPL,GOOG,AMZN?apikey=SUA_API_KEY"; // Substitua SUA_API_KEY com a sua chave da API
+            const cryptoApiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,litecoin"; 
+
+            const [stockData, cryptoData] = await Promise.all([
+                axios.get(stockApiUrl),
+                axios.get(cryptoApiUrl)
+            ]);
+
+            const stockResultsDiv = document.getElementById("stock-market");
+            const cryptoResultsDiv = document.getElementById("crypto-market");
+
+            stockResultsDiv.innerHTML = "";
+            stockData.data.forEach(stock => {
+                stockResultsDiv.innerHTML += `
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">${stock.name}</h5>
+                                <p class="card-text">Preço: $${stock.price}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cryptoResultsDiv.innerHTML = "";
+            cryptoData.data.forEach(crypto => {
+                cryptoResultsDiv.innerHTML += `
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">${crypto.name}</h5>
+                                <p class="card-text">Preço: $${crypto.current_price}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Chama as funções para carregar o conteúdo
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchNews();
+            fetchInfluencers();
+            fetchMarketData();
+        });
+    </script>
+</body>
+</html>
