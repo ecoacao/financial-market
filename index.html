@@ -174,7 +174,7 @@
                 articles.forEach(article => {
                     const newsElement = document.createElement("div");
                     newsElement.classList.add("col-md-4", "mb-4");
-                    newsElement.innerHTML = `
+                    newsElement.innerHTML = ` 
                         <div class="card h-100">
                             <img src="${article.urlToImage || 'https://via.placeholder.com/150x150'}" class="card-img-top" alt="Imagem da notícia">
                             <div class="card-body">
@@ -194,11 +194,12 @@
         // Função para buscar influenciadores
         async function fetchInfluencers() {
             const influencers = [
-                { name: "Euclides Francisco", area: "Economista", twitter: "https://twitter.com/euclidesfr" },
-                { name: "Nuno Baio", area: "Investidor e Educador", twitter: "https://twitter.com/nunobaio" },
-                { name: "Jucélia Gabriel", area: "Consultora de Investimentos", twitter: "https://twitter.com/juceliagabriel" },
-                { name: "JKilla", area: "Influenciador Financeiro", twitter: "https://twitter.com/jkilla" },
-                // Adicione outros influenciadores aqui
+                { name: "Euclides Francisco", area: "Economista", instagram: "https://www.instagram.com/euclidesfr" },
+                { name: "Nuno Baio", area: "Investidor e Educador", instagram: "https://www.instagram.com/nunobaio" },
+                { name: "Jucélia Gabriel", area: "Consultora de Investimentos", instagram: "https://www.instagram.com/juceliagabriel" },
+                { name: "JKilla", area: "Influenciador Financeiro", instagram: "https://www.instagram.com/jkilla" },
+                { name: "Ana Ribeiro", area: "Consultora de Finanças Pessoais", instagram: "https://www.instagram.com/anaribeiro" },  // Conteúdo adicional
+                { name: "Carlos Silva", area: "Investidor em Ações", instagram: "https://www.instagram.com/carlossilva" },  // Conteúdo adicional
             ];
 
             const influencersListDiv = document.getElementById("influencers-list");
@@ -206,12 +207,12 @@
             influencers.forEach(influencer => {
                 const influencerElement = document.createElement("div");
                 influencerElement.classList.add("col-md-4", "mb-4");
-                influencerElement.innerHTML = `
+                influencerElement.innerHTML = ` 
                     <div class="card h-100 influencer-card">
                         <div class="card-body">
                             <h5 class="card-title">${influencer.name}</h5>
                             <p class="card-text">Área: ${influencer.area}</p>
-                            <a href="${influencer.twitter}" target="_blank" class="btn btn-primary">Seguir no Twitter</a>
+                            <a href="${influencer.instagram}" target="_blank" class="btn btn-primary">Seguir no Instagram</a>
                         </div>
                     </div>
                 `;
@@ -224,7 +225,8 @@
             const courses = [
                 { title: "Curso de Investimentos em Ações", platform: "Coursera", link: "https://www.coursera.org/learn/investimentos" },
                 { title: "Curso de Criptomoedas", platform: "Udemy", link: "https://www.udemy.com/course/curso-criptomoedas/" },
-                // Adicionar mais cursos aqui
+                { title: "Curso de Investimentos no Mercado Imobiliário", platform: "Udemy", link: "https://www.udemy.com/course/mercado-imobiliario/" }, // Conteúdo adicional
+                { title: "Curso de Análise Técnica", platform: "Coursera", link: "https://www.coursera.org/learn/analise-tecnica" }, // Conteúdo adicional
             ];
 
             const coursesListDiv = document.getElementById("courses-list");
@@ -232,7 +234,7 @@
             courses.forEach(course => {
                 const courseElement = document.createElement("div");
                 courseElement.classList.add("col-md-4", "mb-4");
-                courseElement.innerHTML = `
+                courseElement.innerHTML = ` 
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">${course.title}</h5>
@@ -250,7 +252,8 @@
             const youtubePlaylists = [
                 { title: "Investimentos para Iniciantes", link: "https://www.youtube.com/playlist?list=PLW6xvcOU6GdB6j_nRHlLtb7bm_D1Xrxl6" },
                 { title: "Criptomoedas: Como Investir", link: "https://www.youtube.com/playlist?list=PL_tzRAZ_dmPHbRfPfuQdgEcUk2QdG6HLg" },
-                // Adicionar mais playlists
+                { title: "Análise Técnica de Ações", link: "https://www.youtube.com/playlist?list=PL_xxxxAxxxxxx" }, // Conteúdo adicional
+                { title: "Investindo em Startups", link: "https://www.youtube.com/playlist?list=PL_xxxxAxxxxxx" }, // Conteúdo adicional
             ];
 
             const youtubeDiv = document.getElementById("youtube-videos");
@@ -258,7 +261,7 @@
             youtubePlaylists.forEach(playlist => {
                 const playlistElement = document.createElement("div");
                 playlistElement.classList.add("col-md-4", "mb-4");
-                playlistElement.innerHTML = `
+                playlistElement.innerHTML = ` 
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title">${playlist.title}</h5>
@@ -274,7 +277,24 @@
         function searchContent() {
             const searchTerm = document.getElementById("search-input").value.toLowerCase();
             
-            // Adicionar lógica de busca aqui, se necessário, para filtrar cursos, playlists ou influenciadores
+            filterContent("news-results", searchTerm);
+            filterContent("influencers-list", searchTerm);
+            filterContent("courses-list", searchTerm);
+            filterContent("youtube-videos", searchTerm);
+        }
+
+        // Função de filtro
+        function filterContent(sectionId, searchTerm) {
+            const sectionDiv = document.getElementById(sectionId);
+            const items = sectionDiv.querySelectorAll(".card");
+            items.forEach(item => {
+                const title = item.querySelector(".card-title").textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    item.style.display = "block";
+                } else {
+                    item.style.display = "none";
+                }
+            });
         }
 
         // Chama as funções para carregar o conteúdo
