@@ -3,88 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notícias e Investimentos Angola</title>
+    <title>Investimentos Angola e Conteúdos Educacionais</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+    
     <style>
+        /* Cores e Estilos do Site */
         body {
-            background-color: #f8f9fa;
+            background-color: #f0f2f5;
+            font-family: 'Arial', sans-serif;
         }
+
+        header {
+            background-color: #28a745; /* Verde Investimento */
+            color: #fff;
+            padding: 20px 0;
+        }
+
         header h1 {
-            color: #007bff;
+            font-size: 2.5rem;
         }
+
+        .navbar {
+            background-color: #007bff; /* Azul claro */
+        }
+
+        .navbar a {
+            color: #fff !important;
+        }
+
+        .navbar a:hover {
+            background-color: #0056b3;
+        }
+
         .card {
             transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 10px;
         }
+
         .card:hover {
             transform: translateY(-10px);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
         }
-        iframe {
-            width: 100%;
-            height: 315px;
+
+        .card-body {
+            padding: 20px;
         }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .empty-results {
+            text-align: center;
+            color: #6c757d;
+        }
+
         .loading-spinner {
             display: none;
             justify-content: center;
             align-items: center;
         }
-        .empty-results {
-            text-align: center;
-            color: #6c757d;
+
+        .content-section {
+            margin-top: 50px;
+        }
+
+        .influencer-card {
+            background-color: #ffc107; /* Dourado */
+        }
+
+        iframe {
+            width: 100%;
+            height: 315px;
         }
     </style>
 </head>
 <body>
+
     <div class="container mt-5">
-        <header class="text-center mb-4">
-            <h1>Notícias e Investimentos Angola</h1>
-            <p>Acompanhe as últimas novidades sobre economia, investimentos, finanças e muito mais!</p>
+        <!-- Cabeçalho -->
+        <header class="text-center">
+            <h1>Investimentos Angola e Conteúdos Educacionais</h1>
+            <p>Encontre notícias, cursos gratuitos e influenciadores sobre investimentos e finanças!</p>
         </header>
 
         <!-- Barra de Navegação -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Angola News</a>
+                <a class="navbar-brand" href="#">InvestAngola</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#news-section">Notícias</a>
+                            <a class="nav-link active" href="#news-section">Notícias</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#influencers-section">Influenciadores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#market-section">Mercado Financeiro</a>
+                            <a class="nav-link" href="#courses-section">Cursos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#youtube-playlists">Playlists do YouTube</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
+        <!-- Barra de Pesquisa -->
+        <div class="search-bar">
+            <input id="search-input" type="text" class="form-control" placeholder="Pesquise por cursos, influenciadores, ou notícias..." onkeyup="searchContent()">
+        </div>
+
         <!-- Seção de Notícias -->
-        <section id="news-section" class="mb-5">
-            <h2 class="text-center mb-4">Últimas Notícias de Economia</h2>
+        <section id="news-section" class="content-section">
+            <h2 class="text-center mb-4">Últimas Notícias sobre Investimentos</h2>
             <div id="news-results" class="row"></div>
         </section>
 
         <!-- Seção de Influenciadores -->
-        <section id="influencers-section" class="mb-5">
-            <h2 class="text-center mb-4">Influenciadores e Especialistas</h2>
+        <section id="influencers-section" class="content-section">
+            <h2 class="text-center mb-4">Influenciadores e Especialistas em Investimentos</h2>
             <div id="influencers-list" class="row"></div>
         </section>
 
-        <!-- Seção de Mercado Financeiro -->
-        <section id="market-section" class="mb-5">
-            <h2 class="text-center mb-4">Mercado Financeiro</h2>
-            <div id="stock-market" class="row mb-4"></div>
-            <div id="crypto-market" class="row"></div>
+        <!-- Seção de Cursos -->
+        <section id="courses-section" class="content-section">
+            <h2 class="text-center mb-4">Cursos sobre Investimentos</h2>
+            <div id="courses-list" class="row"></div>
+        </section>
+
+        <!-- Playlists do YouTube -->
+        <section id="youtube-playlists" class="content-section">
+            <h2 class="text-center mb-4">Playlists do YouTube</h2>
+            <div id="youtube-videos" class="row"></div>
         </section>
 
         <!-- Loading Spinner -->
@@ -102,35 +160,45 @@
     <script>
         // Função para buscar notícias
         async function fetchNews() {
-            const apiUrl = "https://newsapi.org/v2/everything?q=economia+Angola&apiKey=SUA_API_KEY"; // Substitua SUA_API_KEY com a sua chave da NewsAPI
-            const response = await axios.get(apiUrl);
-            const articles = response.data.articles || [];
-            const newsResultsDiv = document.getElementById("news-results");
+            const apiUrl = "https://newsapi.org/v2/everything?q=investimentos+Angola&apiKey=2d5f0d4f7a6347cbb5c5392a31e2f399"; // Substitua pela sua chave da NewsAPI
+            try {
+                const response = await axios.get(apiUrl);
+                const articles = response.data.articles || [];
+                const newsResultsDiv = document.getElementById("news-results");
 
-            newsResultsDiv.innerHTML = "";
-            articles.forEach(article => {
-                const newsElement = document.createElement("div");
-                newsElement.classList.add("col-md-4", "mb-4");
-                newsElement.innerHTML = `
-                    <div class="card h-100">
-                        <img src="${article.urlToImage || 'https://via.placeholder.com/150x150'}" class="card-img-top" alt="Imagem da notícia">
-                        <div class="card-body">
-                            <h5 class="card-title">${article.title}</h5>
-                            <p class="card-text">${article.description || "Sem descrição disponível."}</p>
-                            <a href="${article.url}" target="_blank" class="btn btn-primary">Ler Mais</a>
+                newsResultsDiv.innerHTML = "";
+                if (articles.length === 0) {
+                    newsResultsDiv.innerHTML = '<div class="col-12 empty-results">Nenhuma notícia encontrada.</div>';
+                }
+
+                articles.forEach(article => {
+                    const newsElement = document.createElement("div");
+                    newsElement.classList.add("col-md-4", "mb-4");
+                    newsElement.innerHTML = `
+                        <div class="card h-100">
+                            <img src="${article.urlToImage || 'https://via.placeholder.com/150x150'}" class="card-img-top" alt="Imagem da notícia">
+                            <div class="card-body">
+                                <h5 class="card-title">${article.title}</h5>
+                                <p class="card-text">${article.description || "Sem descrição disponível."}</p>
+                                <a href="${article.url}" target="_blank" class="btn btn-primary">Ler Mais</a>
+                            </div>
                         </div>
-                    </div>
-                `;
-                newsResultsDiv.appendChild(newsElement);
-            });
+                    `;
+                    newsResultsDiv.appendChild(newsElement);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar as notícias:', error);
+            }
         }
 
         // Função para buscar influenciadores
         async function fetchInfluencers() {
             const influencers = [
-                { name: "José dos Santos", area: "Economista", twitter: "https://twitter.com/josedsantos" },
-                { name: "Maria Ferreira", area: "Investidora", twitter: "https://twitter.com/mariaferreira" },
-                // Adicionar mais influenciadores...
+                { name: "Euclides Francisco", area: "Economista", twitter: "https://twitter.com/euclidesfr" },
+                { name: "Nuno Baio", area: "Investidor e Educador", twitter: "https://twitter.com/nunobaio" },
+                { name: "Jucélia Gabriel", area: "Consultora de Investimentos", twitter: "https://twitter.com/juceliagabriel" },
+                { name: "JKilla", area: "Influenciador Financeiro", twitter: "https://twitter.com/jkilla" },
+                // Adicione outros influenciadores aqui
             ];
 
             const influencersListDiv = document.getElementById("influencers-list");
@@ -139,7 +207,7 @@
                 const influencerElement = document.createElement("div");
                 influencerElement.classList.add("col-md-4", "mb-4");
                 influencerElement.innerHTML = `
-                    <div class="card h-100">
+                    <div class="card h-100 influencer-card">
                         <div class="card-body">
                             <h5 class="card-title">${influencer.name}</h5>
                             <p class="card-text">Área: ${influencer.area}</p>
@@ -151,54 +219,74 @@
             });
         }
 
-        // Função para buscar dados do mercado financeiro
-        async function fetchMarketData() {
-            const stockApiUrl = "https://financialmodelingprep.com/api/v3/quote/AAPL,GOOG,AMZN?apikey=SUA_API_KEY"; // Substitua SUA_API_KEY com a sua chave da API
-            const cryptoApiUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,litecoin"; 
+        // Função para buscar cursos
+        async function fetchCourses() {
+            const courses = [
+                { title: "Curso de Investimentos em Ações", platform: "Coursera", link: "https://www.coursera.org/learn/investimentos" },
+                { title: "Curso de Criptomoedas", platform: "Udemy", link: "https://www.udemy.com/course/curso-criptomoedas/" },
+                // Adicionar mais cursos aqui
+            ];
 
-            const [stockData, cryptoData] = await Promise.all([
-                axios.get(stockApiUrl),
-                axios.get(cryptoApiUrl)
-            ]);
-
-            const stockResultsDiv = document.getElementById("stock-market");
-            const cryptoResultsDiv = document.getElementById("crypto-market");
-
-            stockResultsDiv.innerHTML = "";
-            stockData.data.forEach(stock => {
-                stockResultsDiv.innerHTML += `
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">${stock.name}</h5>
-                                <p class="card-text">Preço: $${stock.price}</p>
-                            </div>
+            const coursesListDiv = document.getElementById("courses-list");
+            coursesListDiv.innerHTML = "";
+            courses.forEach(course => {
+                const courseElement = document.createElement("div");
+                courseElement.classList.add("col-md-4", "mb-4");
+                courseElement.innerHTML = `
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${course.title}</h5>
+                            <p class="card-text">Plataforma: ${course.platform}</p>
+                            <a href="${course.link}" target="_blank" class="btn btn-primary">Acessar Curso</a>
                         </div>
                     </div>
                 `;
+                coursesListDiv.appendChild(courseElement);
             });
+        }
 
-            cryptoResultsDiv.innerHTML = "";
-            cryptoData.data.forEach(crypto => {
-                cryptoResultsDiv.innerHTML += `
-                    <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">${crypto.name}</h5>
-                                <p class="card-text">Preço: $${crypto.current_price}</p>
-                            </div>
+        // Função para buscar playlists no YouTube
+        async function fetchYouTubePlaylists() {
+            const youtubePlaylists = [
+                { title: "Investimentos para Iniciantes", link: "https://www.youtube.com/playlist?list=PLW6xvcOU6GdB6j_nRHlLtb7bm_D1Xrxl6" },
+                { title: "Criptomoedas: Como Investir", link: "https://www.youtube.com/playlist?list=PL_tzRAZ_dmPHbRfPfuQdgEcUk2QdG6HLg" },
+                // Adicionar mais playlists
+            ];
+
+            const youtubeDiv = document.getElementById("youtube-videos");
+            youtubeDiv.innerHTML = "";
+            youtubePlaylists.forEach(playlist => {
+                const playlistElement = document.createElement("div");
+                playlistElement.classList.add("col-md-4", "mb-4");
+                playlistElement.innerHTML = `
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">${playlist.title}</h5>
+                            <a href="${playlist.link}" target="_blank" class="btn btn-primary">Assistir Playlist</a>
                         </div>
                     </div>
                 `;
+                youtubeDiv.appendChild(playlistElement);
             });
+        }
+
+        // Função de busca de conteúdo
+        function searchContent() {
+            const searchTerm = document.getElementById("search-input").value.toLowerCase();
+            
+            // Adicionar lógica de busca aqui, se necessário, para filtrar cursos, playlists ou influenciadores
         }
 
         // Chama as funções para carregar o conteúdo
         document.addEventListener("DOMContentLoaded", () => {
             fetchNews();
             fetchInfluencers();
-            fetchMarketData();
+            fetchCourses();
+            fetchYouTubePlaylists();
         });
     </script>
+
 </body>
 </html>
+
+
